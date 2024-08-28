@@ -22,9 +22,11 @@ export default function ContactList() {
   ) : (
     <>
       <p>There are no contacts</p>
-      <button className={css.btn} onClick={onReset}>
-        Reset default
-      </button>
+      {contactList.length > 0 && (
+        <button className={css.btn} onClick={onReset}>
+          Reset default
+        </button>
+      )}
     </>
   );
 }
