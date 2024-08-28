@@ -1,9 +1,10 @@
 import css from './ContactForm.module.css';
 import * as Yup from 'yup';
-import PropTypes from 'prop-types';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FaUser, FaPhoneAlt } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
+import { addContact } from '../../redux/contactsSlice';
+import { useDispatch } from 'react-redux';
 
 const initialValues = { name: '', number: '' };
 const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{0,6}\)[ -]?)|([0-9]{0,4})[ -]?)*?[0-9]{2,4}[ -]?[0-9]{2,4}$/;
@@ -12,10 +13,11 @@ const validationSchema = Yup.object().shape({
   number: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required('Phone number is required'),
 });
 
-export default function ContactForm({ onSubmit }) {
-  function handleSubmit(values, { resetForm }) {
+export default function ContactForm() {
+  const dispatcher = useDispatch();
+  function handleSubmit({ name, number }, { resetForm }) {
     resetForm();
-    onSubmit(values);
+    dispatcher(addContact(name, number));
   }
 
   return (
@@ -42,7 +44,3 @@ export default function ContactForm({ onSubmit }) {
     </Formik>
   );
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

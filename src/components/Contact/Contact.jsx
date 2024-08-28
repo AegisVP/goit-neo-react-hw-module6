@@ -2,9 +2,13 @@ import css from './Contact.module.css';
 import PropTypes from 'prop-types';
 import { FaUser, FaPhoneAlt } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
+import { deleteContact } from '../../redux/contactsSlice';
+import { useDispatch } from 'react-redux';
 
-export default function Contact({ contact, onDelete }) {
-  const { id, name, number } = contact;
+export default function Contact({ contact:{ id, name, number } }) {
+  const dispatcher = useDispatch();
+
+  const onDelete = id => dispatcher(deleteContact(id));
 
   return (
     <IconContext.Provider value={{ style: { margin: '0 10px 0 0' } }}>
@@ -33,5 +37,4 @@ Contact.propTypes = {
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
