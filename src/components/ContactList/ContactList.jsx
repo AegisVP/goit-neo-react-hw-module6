@@ -1,16 +1,17 @@
 import css from './ContactList.module.css';
 import Contact from '../Contact/Contact';
-import { setStatusFilter } from '../../redux/filtersSlice';
+import { selectNameFilter, changeFilter } from '../../redux/filtersSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from '../../redux/contactsSlice';
 
 export default function ContactList() {
   const dispatcher = useDispatch();
-  const onReset = () => dispatcher(setStatusFilter(''));
-  const contactList = useSelector(state => state.contacts.items);
-  const searchValue = useSelector(state => state.filters.name);
-  const filteredContacts = contactList.filter(contact =>
-    contact.name.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  const onReset = () => dispatcher(changeFilter(''));
+
+  const contactList = useSelector(selectContacts);
+  const searchValue = useSelector(selectNameFilter);
+
+  const filteredContacts = contactList.filter(contact => contact.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()));
 
   return filteredContacts.length > 0 ? (
     <ul className={css.list}>

@@ -5,7 +5,7 @@ import { IconContext } from 'react-icons';
 import { deleteContact } from '../../redux/contactsSlice';
 import { useDispatch } from 'react-redux';
 
-export default function Contact({ contact:{ id, name, number } }) {
+export default function Contact({ contact: { id, name, number } }) {
   const dispatcher = useDispatch();
 
   const onDelete = id => dispatcher(deleteContact(id));

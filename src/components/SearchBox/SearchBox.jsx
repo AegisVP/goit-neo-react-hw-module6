@@ -1,13 +1,13 @@
 import css from './SearchBox.module.css';
 import { FaUser } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import { setStatusFilter } from '../../redux/filtersSlice';
+import { changeFilter, selectNameFilter } from '../../redux/filtersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SearchBox() {
-  const searchValue = useSelector(state => state.filters.name);
+  const searchValue = useSelector(selectNameFilter);
   const dispatcher = useDispatch();
-  const onSearch = value => dispatcher(setStatusFilter(value));
+  const onSearch = value => dispatcher(changeFilter(value));
 
   return (
     <IconContext.Provider value={{ className: css.icon }}>
